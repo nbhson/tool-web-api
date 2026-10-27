@@ -2,6 +2,8 @@
 navigator.mediaDevices.getUserMedia({
   audio: true,
   video: true
-}).then(stream => { // use the video element
+}).then(stream => {
   console.log(stream);
-})
+}).catch(err => {
+  alert('Camera/microphone error: ' + err.message);
+});

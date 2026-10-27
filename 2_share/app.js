@@ -11,10 +11,18 @@ const btn = document.querySelector('button');
 const resultPara = document.querySelector('.result');
 
 btn.addEventListener('click', async () => {
+  if (!navigator.share) {
+    resultPara.textContent = 'Web Share API not available in this browser.';
+    return;
+  }
   try {
     await navigator.share(shareData)
     resultPara.textContent = 'MDN shared successfully'
   } catch (err) {
-    resultPara.textContent = 'Error: ' + err
+    if (err.name === 'AbortError') {
+      resultPara.textContent = 'Share cancelled';
+    } else {
+      resultPara.textContent = 'Error: ' + err.message
+    }
   }
 });
